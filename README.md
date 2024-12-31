@@ -1,5 +1,5 @@
 # ARIAN
-Source code for the papers 
+Source code for the paper, 'Empowering Speed Prediction with Auxiliary Feature-Aided Dependency Learning'
 
 # Dependancy
 
