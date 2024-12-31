@@ -85,15 +85,19 @@ datafile = './data/'+args.data+'.npy'
 wdatafile = './data/'+args.weatherdata+'.npy'
 flowfile = './data/'+args.flowdata+'.npy'
 
+# Load Traffic Speed data File
 scaler = StandardScaler()
 data_array = np.load(datafile)
 
 scaler.fit(data_array)
 data_array_t = scaler.transform(data_array)
 
+# Load Traffic Flow data file
 f_scaler = StandardScaler()
 fdata_array = np.load(flowfile)[:-12] 
 f_scaler.fit(fdata_array)
+
+# Concatenate Speed and Flow
 fdata_array = f_scaler.transform(fdata_array)
 fdata_array = fdata_array.reshape((-1, args.seg_num, 1))
 
@@ -103,6 +107,8 @@ data_array = data_array.swapaxes(0, 1)
 data_array = np.concatenate((data_array, fdata_array), axis=-1)
 print(data_array.shape)
 # data_array = np.reshape(data_array, [-1, args.seg_num, 2])
+
+# Load Weather data File
 wdata_array_ = np.load(wdatafile, allow_pickle=True).astype('float32')
 wdata_array = wdata_array_[:, :3]     # "In original version, [time index, temperatrue, rain fall]"
 
@@ -117,6 +123,8 @@ wdata_array = wdata_array.swapaxes(0, 2)
 wdata_array = wdata_array.swapaxes(0, 1)
 wdata_array = np.concatenate((wdata_array, wdata_array_[:-12].reshape((-1, 3, 1))), axis=-1)
 print(data_array.shape, wdata_array.shape)
+
+# Concatenate Traffic and Weather
 data_array = np.concatenate((data_array, wdata_array), axis=1)
 print(data_array.shape)
 
