@@ -21,7 +21,9 @@ os.environ["CUDA_VISIBLE_DEVICES"] = "0"
 torch.manual_seed(11)
 np.random.seed(11)
 
-device = torch.device('cuda:0')
+#device = torch.device('cuda:0')
+# to use cpu if gpu is unavailable
+device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
 
 args = argparse.ArgumentParser(description='args')
 args.add_argument('--mode', default='train', type=str)
