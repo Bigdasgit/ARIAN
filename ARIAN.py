@@ -15,6 +15,7 @@ import configparser
 from torchsummaryX import summary
 from sklearn.preprocessing import StandardScaler
 
+# We merge these arguments to config file later
 os.environ['CUDA_LAUNCH_BLOCKING'] = '1'
 os.environ["CUDA_VISIBLE_DEVICES"] = "0"
 torch.manual_seed(11)
