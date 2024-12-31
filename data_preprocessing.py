@@ -4,7 +4,7 @@ from sklearn.preprocessing import StandardScaler
 
 def data_load(data, node_num, input_len, output_len):
     scaler_speed = StandardScaler()
-    scaler_volumn = StandardScaler()
+    scaler_volume = StandardScaler()
     data_np = np.load(data)
     data_np = data_np['data'].astype('float32')
 
@@ -14,20 +14,20 @@ def data_load(data, node_num, input_len, output_len):
         print(data_np.shape)
     
     speed_data = data_np[:, node_num*(12-input_len):node_num*12, 0]
-    volumn_data = data_np[:, node_num*(12-input_len):node_num*12, 1]
+    volume_data = data_np[:, node_num*(12-input_len):node_num*12, 1]
     
     # Std for speed
     scaler_speed.fit(speed_data)
     std_data_speed = scaler_speed.transform(speed_data)
 
-    # Std for volumn
-    scaler_volumn.fit(volumn_data)
-    std_data_volumn = scaler_volumn.transform(volumn_data)
+    # Std for volume
+    scaler_volume.fit(volume_data)
+    std_data_volume = scaler_volume.transform(volume_data)
 
-    # Concate speed and volumn >> Input sequence
+    # Concate speed and volume >> Input sequence
     std_data_speed = np.expand_dims(std_data_speed, axis=2)
-    std_data_volumn = np.expand_dims(std_data_volumn, axis=2)
-    out_np = np.concatenate((std_data_speed, std_data_volumn), axis=2)
+    std_data_volume = np.expand_dims(std_data_volume, axis=2)
+    out_np = np.concatenate((std_data_speed, std_data_volume), axis=2)
 
     # Concate intput sequence and output sequence
     out_np = np.concatenate((out_np, data_np[:, :node_num*output_len, 2:3]), axis=2)
