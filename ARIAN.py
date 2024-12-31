@@ -11,6 +11,7 @@ import os
 import csv
 import copy
 import argparse
+import tqdm
 import configparser
 from torchsummaryX import summary
 from sklearn.preprocessing import StandardScaler
@@ -319,7 +320,7 @@ for epoch in range(0, args.train_epoch):
     end = torch.cuda.Event(enable_timing=True)
     start.record()
 
-    for batch_idx, samples in enumerate(dataloader):
+    for batch_idx, samples in enumerate(tqdm(dataloader)):
         if batch_idx % 400 == 0:
             print(batch_idx, len(dataloader))
         optimizer.zero_grad()
