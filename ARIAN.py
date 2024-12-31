@@ -184,6 +184,7 @@ class Net(nn.Module):
             x = torch.cat((x, t), axis=-1).float()
             flow = torch.cat((flow, t), axis=-1).float()
 
+        # Basic embeddings of Traffic speed and Flow 
         x = self.embFC(x)
         flow = self.fembFC(flow)
         x = torch.reshape(x, (-1, args.input_time * args.seg_num, args.emb_feature))
